@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,7 +13,9 @@ public class InfiniteScroll : MonoBehaviour
     [SerializeField] private float _itemSpacing;
     [SerializeField] private Transform _stopPosition;
 
-    [SerializeField] private RectTransform _itemPrefab;
+    [SerializeField] private UIItemEntry _itemPrefab;
+
+    private List<UIItemEntry> _allUIItemEntry = new();
 
     private bool _isPositiveDrag;
     private bool _isDecreaseVelocity;
@@ -20,45 +23,25 @@ public class InfiniteScroll : MonoBehaviour
     private Transform _targetSlowChildTransform;
     private Vector3 _targetOriginPosition;
 
-    void Start()
+    public void Initialize(List<ItemDataSO> items)
     {
-        Initialize();
-    }
-
-    private void Initialize()
-    {
+        RemoveAllItem();
+        ResetParam();
         _scrollRect.movementType = ScrollRect.MovementType.Unrestricted;
         _scrollRect.onValueChanged.AddListener(OnViewScroll);
+        CreateItems(items);
+    }
+
+    private void CreateItems(List<ItemDataSO> items)
+    {
+        foreach (var item in items)
+        {
+            CreateNewItemAtLast(_scrollRect.content.position, item);
+        }
     }
 
     void Update()
     {
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _isDecreaseVelocity = true;
-            
-            for (int i = 0; i < 3; i++)
-            {
-                int lastItemIndex = _isPositiveDrag ? 0 : _scrollRect.content.childCount - 1;
-                var curItem = _scrollRect.content.GetChild(lastItemIndex).GetComponent<RectTransform>();
-                var newItem = CreateNewItemAtLast(curItem);
-
-                if (i == 1)
-                {
-                    _targetSlowChildTransform = newItem;
-                    _targetOriginPosition = _targetSlowChildTransform.position;
-                }
-            }
-            // Debug.Log(_targetSlowChildTransform.name);
-            
-            // for (int i = 0; i < _scrollRect.content.childCount; i++)
-            // {
-            //     Debug.Log($"Pool {_scrollRect.content.GetChild(i)}");
-            // }
-        }
-
         if (_isDecreaseVelocity)
         {
             float targetOriginDistance = _targetOriginPosition.y - _stopPosition.position.y;
@@ -79,6 +62,26 @@ public class InfiniteScroll : MonoBehaviour
         else
         {
             _scrollRect.velocity = _initScrollRectVelocity;
+        }
+    }
+
+    public void SetDecreaseSpeed(List<ItemDataSO> selectedItems, int stoppedIndex)
+    {
+        _isDecreaseVelocity = true;
+        stoppedIndex = Mathf.Clamp(stoppedIndex, 0, selectedItems.Count - 1);
+
+        for (int i = 0; i < selectedItems.Count; i++)
+        {
+            int lastItemIndex = _isPositiveDrag ? 0 : _scrollRect.content.childCount - 1;
+            var curItem = _scrollRect.content.GetChild(lastItemIndex).GetComponent<RectTransform>();
+            var newItem = CreateNewItemAtLast(curItem.position, selectedItems[i]);
+            // newItem.GetComponent<Image>().color = Color.red;
+
+            if (i == stoppedIndex)
+            {
+                _targetSlowChildTransform = newItem;
+                _targetOriginPosition = _targetSlowChildTransform.position;
+            }
         }
     }
 
@@ -105,11 +108,11 @@ public class InfiniteScroll : MonoBehaviour
 
         if (_isPositiveDrag)
         {
-            newPos.y = lastItem.position.y - (curItem.rect.height * 1.5f) + _itemSpacing;
+            newPos.y = lastItem.position.y - curItem.rect.height - _itemSpacing;
         }
         else
         {
-            newPos.y = lastItem.position.y + (curItem.rect.height * 1.5f) - _itemSpacing;
+            newPos.y = lastItem.position.y + curItem.rect.height + _itemSpacing;
         }
 
         curItem.position = newPos;
@@ -128,17 +131,34 @@ public class InfiniteScroll : MonoBehaviour
         }
     }
 
-    private Transform CreateNewItemAtLast(Transform currentItem)
+    private Transform CreateNewItemAtLast(Vector2 currentPosition, ItemDataSO itemDataSO)
     {
-        RectTransform newItem = Instantiate(_itemPrefab);
-        Vector2 newPos = currentItem.position;
-        newPos.y = currentItem.position.y + (newItem.rect.height * 1.5f) - _itemSpacing;
+        UIItemEntry newItem = Instantiate(_itemPrefab, _scrollRect.content);
+        newItem.Initialize(itemDataSO);
 
-        newItem.SetParent(_scrollRect.content);
-        newItem.position = newPos;
-        newItem.GetComponent<Image>().color = Color.red;
-        newItem.SetAsLastSibling();
+        RectTransform newItemRectTransform = newItem.GetComponent<RectTransform>();
+        Vector2 newPos = currentPosition;
+        newPos.y = currentPosition.y + newItemRectTransform.rect.height + _itemSpacing;
 
-        return newItem;
+        newItemRectTransform.position = newPos;
+        newItemRectTransform.SetAsLastSibling();
+
+        _allUIItemEntry.Add(newItem);
+
+        return newItemRectTransform;
+    }
+
+    private void ResetParam()
+    {
+        _isDecreaseVelocity = false;
+    }
+
+    private void RemoveAllItem()
+    {
+        foreach (var item in _allUIItemEntry)
+        {
+            Destroy(item.gameObject);
+        }
+        _allUIItemEntry.Clear();
     }
 }

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &190311014895924526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7392000135288092884}
+  - component: {fileID: 4687359467849550803}
+  m_Layer: 0
+  m_Name: GamePlayController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7392000135288092884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190311014895924526}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4687359467849550803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190311014895924526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff7ddd5222e0be48bac4084a126a077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allItems:
+  - {fileID: 11400000, guid: c427d46e0b354d04bb64bd356e14abe2, type: 2}
+  - {fileID: 11400000, guid: d5c2c3fad10da2c41ad61547c460e9f9, type: 2}
+  - {fileID: 11400000, guid: 72915986ef32d3e48a381ba834ee288e, type: 2}
+  - {fileID: 11400000, guid: 3dcec538a8a028e41893583e35baf62f, type: 2}
+  - {fileID: 11400000, guid: db4bf735291eac44ba822328b9edd149, type: 2}
+  - {fileID: 11400000, guid: 4b5c5cc38ad288240876208db4379c50, type: 2}
+  - {fileID: 11400000, guid: aa4cc7f14669641408f5406942c7ef5c, type: 2}
+  - {fileID: 11400000, guid: 3d3d8fadb2f29164aaca0107c348589e, type: 2}
+  - {fileID: 11400000, guid: e4e8eb6d15ba47e4fbfe6775aae6ee79, type: 2}
+  _onSetupItemDatasEvent: {fileID: 11400000, guid: c6b1f9322ad784a4fa46ee583d3f0e75, type: 2}
