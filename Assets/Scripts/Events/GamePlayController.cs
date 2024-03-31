@@ -7,8 +7,21 @@ public class GamePlayController : MonoBehaviour
 {
     [SerializeField] private List<ItemDataSO> _allItems;
 
+    [Header("Event Listener")]
+    [SerializeField] private VoidEventChannel _onGamePlayRestartEvent;
+
     [Header("Event Raiser")]
     [SerializeField] private ItemDataSOsEventChannel _onSetupItemDatasEvent;
+
+    void OnEnable()
+    {
+        _onGamePlayRestartEvent.OnEventRaised += Initialize;
+    }
+
+    void OnDisable()
+    {
+        _onGamePlayRestartEvent.OnEventRaised -= Initialize;
+    }
 
     void Start()
     {
@@ -24,7 +37,7 @@ public class GamePlayController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Initialize(); 
+            Initialize();
         }
     }
 }

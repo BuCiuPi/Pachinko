@@ -54,4 +54,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa4cc7f14669641408f5406942c7ef5c, type: 2}
   - {fileID: 11400000, guid: 3d3d8fadb2f29164aaca0107c348589e, type: 2}
   - {fileID: 11400000, guid: e4e8eb6d15ba47e4fbfe6775aae6ee79, type: 2}
+  _onGamePlayRestartEvent: {fileID: 11400000, guid: 675e9d632d06a1c428b1112154387f52, type: 2}
   _onSetupItemDatasEvent: {fileID: 11400000, guid: c6b1f9322ad784a4fa46ee583d3f0e75, type: 2}
