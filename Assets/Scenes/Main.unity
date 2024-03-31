@@ -430,6 +430,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2054696242367060755, guid: 48b779ef3957ff44a9c2d09e867756a5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5663379503761179945, guid: 48b779ef3957ff44a9c2d09e867756a5, type: 3}
       propertyPath: m_SizeDelta.y
       value: 750
@@ -711,6 +715,10 @@ PrefabInstance:
     - target: {fileID: 4602558952034616100, guid: b4747022692d14d48ac8a1cf097486f8, type: 3}
       propertyPath: m_Name
       value: UIGamePlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 8564616617673622771, guid: b4747022692d14d48ac8a1cf097486f8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
