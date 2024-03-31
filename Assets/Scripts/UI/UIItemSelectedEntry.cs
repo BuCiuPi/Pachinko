@@ -25,6 +25,7 @@ public class UIItemSelectedEntry : UIItemEntry
 
     private void OnItemClicked()
     {
+        _animator.SetTrigger("Pop");
         _onItemSelectedEvent.RaiseEvent(_currentItemData);
     }
 }
